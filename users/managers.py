@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, email, role, password, **extra_fields):
-
+        print("create super user working...")
         if username is None:
             raise TypeError('You should provide a username')
         if email is None:
@@ -37,6 +37,7 @@ class UserManager(BaseUserManager):
             role='ADMIN'
         )
 
+        user.is_verified = True
         user.is_superuser = True
         user.is_staff = True
 

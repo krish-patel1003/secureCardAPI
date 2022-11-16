@@ -36,3 +36,30 @@ class User(AbstractBaseUser, PermissionsMixin):
             'refresh':str(refresh_token),
             'access':str(refresh_token.access_token)
         }
+
+
+class ConsumerProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=255)
+    lname = models.CharField(max_length=255)    
+    phone = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return f'{self.user.username}'
+    
+    def get_full_name(self):
+        return f'{self.fname} {self.lname}'
+
+class Merchant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.user.username}'
+
+class Bank(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.user.username}'
