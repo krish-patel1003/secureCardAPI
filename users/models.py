@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
+from rest_framework_simplejwt.tokens import RefreshToken
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -14,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     username = models.CharField(max_length=255, unique=True, db_index=True)
-    role = models.CharField(choices=ROLE_OPTIONS)
+    role = models.CharField(choices=ROLE_OPTIONS, max_length=255)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -30,4 +31,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f'{self.role} - {self.email}'
     
     def tokens(self):
-        return ''
+        refresh_token = RefreshToken.for_user(self)
+        return {
+            'refresh':str(refresh_token),
+            'access':str(refresh_token.access_token)
+        }
