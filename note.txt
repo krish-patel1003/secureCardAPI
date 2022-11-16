@@ -1,0 +1,74 @@
+User
+- id
+- username
+- email
+- password
+- role
+- is_staff
+- is_active
+- is_superuser
+
+Consumer Profile
+- id
+- name
+- email
+- phoneNo
+
+
+Card
+- consumerId
+- cardId
+- FullPAN(encrypted)
+- exp date
+
+
+Token
+- cardId
+- Token
+- TokenExp
+
+
+ConsumerAddress
+- consumerId
+- cardId
+- billingAdd(Address)
+- shippingAdd(Address)
+
+
+Address
+- AddressId
+- line1
+- line2
+- pincode
+- city
+- country
+
+
+Bank
+- bankId
+- name
+- email
+- phoneNo
+
+
+Merchant
+- MerchantId
+- name
+- email
+- phoneNo
+
+
+Transaction
+- TransactionID
+- MerchantId
+- consumerId
+
+
+TransactionDetails
+- TransactionID
+- transactionamt
+- Token
+ 
+
+
+
