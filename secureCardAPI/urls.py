@@ -24,6 +24,7 @@ from drf_yasg import openapi
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('card/', include('card.urls')),
 ]
 
 # swagger config

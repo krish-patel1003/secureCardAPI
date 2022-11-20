@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.core.validators import MinLengthValidator
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -60,6 +61,7 @@ class Merchant(models.Model):
 class Bank(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-
+    issuerId = models.CharField(unique=True, max_length=3, validators=[MinLengthValidator(3)])
+    
     def __str__(self):
         return f'{self.user.username}'

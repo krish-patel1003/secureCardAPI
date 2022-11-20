@@ -5,7 +5,7 @@ from users.models import User
 from users.serializers import (
     RegisterSerializer,
     EmailVerificationSerializer,
-    LoginSerializer
+    LoginSerializer,
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,7 +15,6 @@ from django.urls import reverse
 from users.utils import Util
 import jwt
 from django.conf import settings
-from users.models import ConsumerProfile
 # Create your views here.
 
 

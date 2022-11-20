@@ -2,6 +2,7 @@ from rest_framework import serializers
 from users.models import User
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
+from card.models import Card
 
 
 class RegisterSerializer(serializers.ModelSerializer):

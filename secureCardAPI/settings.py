@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'drf_yasg',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'card',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,7 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
 }
+
+# PAN encryption key
+PAN_ENCRYPT_KEY = b'QYRyIQTW7wNrCCmqGAi53UnbCmMxJg07Jwn-3CVjaxQ='
+# print(PAN_ENCRYPT_KEY)

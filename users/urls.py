@@ -2,7 +2,7 @@ from django.urls import path
 from users.views import (
     RegisterAPIView,
     VerifyEmailAPIView,
-    LoginAPIView
+    LoginAPIView,
 )
 
 urlpatterns = [
