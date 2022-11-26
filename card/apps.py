@@ -5,6 +5,5 @@ class CardConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'card'
 
-    def ready(self) -> None:
+    def ready(self):
         import card.signals
-        return super().ready()
