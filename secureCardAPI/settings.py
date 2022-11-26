@@ -170,3 +170,7 @@ SIMPLE_JWT = {
 # PAN encryption key
 PAN_ENCRYPT_KEY = b'QYRyIQTW7wNrCCmqGAi53UnbCmMxJg07Jwn-3CVjaxQ='
 # print(PAN_ENCRYPT_KEY)
+
+SWAGGER_SETTINGS = {
+   'USE_SESSION_AUTH': False
+}
