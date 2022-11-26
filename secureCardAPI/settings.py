@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-xde0$%c+han)4^$_2v7$b#)ux1ews18uzsh8*g@i=34!_(-cqj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,9 +85,17 @@ WSGI_APPLICATION = 'secureCardAPI.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "railway",
+        "USER": "postgres",
+        "PASSWORD":os.getenv('PGPASSWORD'),
+        "HOST": os.getenv('PGHOST'),
+        "PORT": os.getenv('PGPORT'),
     }
 }
 
