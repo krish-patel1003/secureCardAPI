@@ -63,3 +63,9 @@ class IsIssuerBank(permissions.BasePermission):
 
         except User.DoesNotExist as ex:
             raise exceptions.AuthenticationFailed("No such user found")
+
+
+class IsOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return obj.owner == request.user 

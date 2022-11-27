@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from card.models import Card
-from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveDestroyAPIView
 from rest_framework.views import APIView
 from card.serializers import CardSerializer, AuthorizeCardSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -9,7 +9,7 @@ from card.utils import encrypt, decrypt
 from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework import status
-from card.permissions import IsIssuerBank
+from card.permissions import IsIssuerBank, IsOwner
 # Create your views here.
 
 
@@ -53,3 +53,13 @@ class AuthorizeTokenization(APIView):
             card.save()
         
         return Response({"success":"Issuer Bank Authorized card for tokenization"})
+
+
+class RetrieveDeleteCardAPIView(RetrieveDestroyAPIView):
+    serializer_class = CardSerializer
+    queryset = Card.objects.all()
+    permission_classes = (IsAuthenticated, IsOwner,) 
+    lookup_field = "id" 
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)

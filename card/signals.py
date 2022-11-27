@@ -28,6 +28,8 @@ def create_token(sender, instance, created, **kwargs):
             print(t)
             token = Token.objects.create(cardId=instance, token=t)
             token.save()
+            card.is_tokenized = True
+            card.save()
             print(token)
             return {"msg":"Token created", "token":token}
         except Exception as e:
