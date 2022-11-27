@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from rest_framework import exceptions
 from rest_framework.exceptions import ValidationError
-from users.models import Bank, User
+from users.models import Bank, User, ConsumerProfile
 import jwt
 from django.conf import settings
 from card.models import Card 
@@ -68,4 +68,5 @@ class IsIssuerBank(permissions.BasePermission):
 class IsOwner(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
-        return obj.owner == request.user 
+        consumer = ConsumerProfile.objects.get(user=request.user)
+        return obj.consumer == consumer

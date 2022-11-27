@@ -59,7 +59,8 @@ class RetrieveDeleteCardAPIView(RetrieveDestroyAPIView):
     serializer_class = CardSerializer
     queryset = Card.objects.all()
     permission_classes = (IsAuthenticated, IsOwner,) 
-    lookup_field = "id" 
+    lookup_field = "cardId" 
 
     def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
+        consumer = ConsumerProfile.objects.get(user=self.request.user)
+        return self.queryset.filter(consumer=consumer)

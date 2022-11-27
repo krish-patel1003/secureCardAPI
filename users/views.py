@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
-from users.models import User
+from users.models import User, ConsumerProfile
 from users.serializers import (
     RegisterSerializer,
     EmailVerificationSerializer,
     LoginSerializer,
+    ConsumerProfileSerializer
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,7 +16,10 @@ from django.urls import reverse
 from users.utils import Util
 import jwt
 from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
+from users.permissions import IsConsumer
 # Create your views here.
+
 
 
 class RegisterAPIView(GenericAPIView):
@@ -88,3 +92,13 @@ class LoginAPIView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PrepareConsumerProfile(RetrieveUpdateAPIView):
+    serializer_class = ConsumerProfileSerializer
+    queryset = ConsumerProfile.objects.all()
+    permission_classes = (IsConsumer, ) 
+    lookup_field = "id" 
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
