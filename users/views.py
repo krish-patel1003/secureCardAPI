@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.views import APIView
-from users.models import User, ConsumerProfile
+from users.models import User, ConsumerProfile, Bank
 from users.serializers import (
     RegisterSerializer,
     EmailVerificationSerializer,
     LoginSerializer,
-    ConsumerProfileSerializer
+    ConsumerProfileSerializer,
+    BankSerializer
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,7 +18,7 @@ from users.utils import Util
 import jwt
 from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
-from users.permissions import IsConsumer
+from users.permissions import IsUser
 # Create your views here.
 
 
@@ -53,12 +54,6 @@ class RegisterAPIView(GenericAPIView):
 
         return Response({"data": serializer.data, "mssg": "user created"}, status=status.HTTP_201_CREATED)
 
-
-# class RequestActivationLink(APIView):
-
-#     def get(self, request):
-
-#         Util.prepare_email()
 
 class VerifyEmailAPIView(APIView):
     serializer_class = EmailVerificationSerializer
@@ -97,7 +92,16 @@ class LoginAPIView(GenericAPIView):
 class PrepareConsumerProfile(RetrieveUpdateAPIView):
     serializer_class = ConsumerProfileSerializer
     queryset = ConsumerProfile.objects.all()
-    permission_classes = (IsConsumer, ) 
+    permission_classes = (IsUser, ) 
+    lookup_field = "id" 
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
+
+class BankDetailAPIView(RetrieveUpdateAPIView):
+    serializer_class = BankSerializer
+    queryset = Bank.objects.all()
+    permission_classes = (IsUser, ) 
     lookup_field = "id" 
 
     def get_queryset(self):

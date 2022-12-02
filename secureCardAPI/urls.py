@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('card/', include('card.urls')),
+    path('checkout/', include('checkout.urls')),
 ]
 
 # swagger config

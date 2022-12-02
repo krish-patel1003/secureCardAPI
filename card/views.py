@@ -16,6 +16,7 @@ from card.permissions import IsIssuerBank, IsOwner
 class CardListCreateAPIView(ListCreateAPIView):
     serializer_class = CardSerializer
     queryset = Card.objects.all()
+    permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
         consumer = ConsumerProfile.objects.get(user=self.request.user)

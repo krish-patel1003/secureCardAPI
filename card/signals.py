@@ -33,7 +33,7 @@ def create_token(sender, instance, created, **kwargs):
             print(token)
             return {"msg":"Token created", "token":token}
         except Exception as e:
-            print(e)
+            print("Error"+ str(e))
             return {"error":"something went wrong whilt token storing."}
 
 # @receiver(post_save, sender=Card)

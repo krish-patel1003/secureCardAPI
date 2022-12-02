@@ -54,6 +54,8 @@ class IsIssuerBank(permissions.BasePermission):
 
             if issuer_id == decrypted_PAN[:3]:
                 return True
+            else:
+                raise exceptions.AuthenticationFailed("User is not the issuer bank")
 
         except jwt.ExpiredSignatureError as ex:
             raise exceptions.AuthenticationFailed("Token is expired, Login again")

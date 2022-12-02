@@ -9,16 +9,16 @@ class CardSerializer(serializers.ModelSerializer):
         model = Card
         fields = ['consumer', 'cardId', 'fullPAN', 'expDate', 'is_issuer_authorized', 'is_tokenized']
 
-    def create(self, validated_data):
-        print(validated_data)
-        print("Authorize for card tokenization requested...")
-        # base_url = '/card/authorize-card-tokenization/'
-        # query_string = urlencode({"cardId":validated_data["cardId"]})
-        # url = f'{base_url}?{query_string}'
-        # response = redirect(url)
-        # print(response)
+    # def create(self, validated_data):
+    #     print(validated_data)
+    #     print("Authorize for card tokenization requested...")
+    #     # base_url = '/card/authorize-card-tokenization/'
+    #     # query_string = urlencode({"cardId":validated_data["cardId"]})
+    #     # url = f'{base_url}?{query_string}'
+    #     # response = redirect(url)
+    #     # print(response)
 
-        return super().create(validated_data)
+    #     return super().create(validated_data)
 
 
 class AuthorizeCardSerializer(serializers.Serializer):

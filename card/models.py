@@ -33,7 +33,7 @@ class TokenManager(models.Manager):
 
 class Token(models.Model):
     cardId = models.ForeignKey(Card, on_delete=models.CASCADE)
-    token = models.CharField(max_length=255)
+    token = models.TextField()
 
     def __str__(self):
         return str(self.cardId)

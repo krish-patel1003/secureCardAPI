@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import User, ConsumerProfile
+from users.models import User, ConsumerProfile, Bank
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
 from card.models import Card
@@ -9,7 +9,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'role', 'password']
+        fields = ['id', 'username', 'email', 'role', 'password']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -89,3 +89,10 @@ class ConsumerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConsumerProfile
         fields = ['id', 'user', 'fname', 'lname', 'phone']
+
+
+class BankSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bank
+        fields = ['id', 'user', 'name', 'issuerId']
