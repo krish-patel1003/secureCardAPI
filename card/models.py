@@ -38,5 +38,18 @@ class Token(models.Model):
     def __str__(self):
         return str(self.cardId)
 
-        
+
+class BankCard(models.Model):
+    consumerId = models.ForeignKey(ConsumerProfile, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=255)
+    lname = models.CharField(max_length=255)    
+    phone = models.CharField(max_length=10)
+    email = models.EmailField(default="a@b.com")
+    fullPan = models.CharField(max_length=255)
+    expDate = models.DateField()
+
+    def __str__(self):
+        return f"{self.fname} {self.lname} - {self.expDate}"
+
+
 
