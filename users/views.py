@@ -97,12 +97,3 @@ class PrepareConsumerProfile(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
-
-class BankDetailAPIView(RetrieveUpdateAPIView):
-    serializer_class = BankSerializer
-    queryset = Bank.objects.all()
-    permission_classes = (IsUser, ) 
-    lookup_field = "id" 
-
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
