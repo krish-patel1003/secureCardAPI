@@ -29,33 +29,6 @@ class CardListCreateAPIView(ListCreateAPIView):
         return self.queryset.filter(consumer=consumer)
 
 
-class CardEnrollmentAPIView(GenericAPIView):
-    serializer_class = CardSerializer
-
-    def post(self, request):
-        data = request.data
-        serializer = self.serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-
-        return Response({"data":serializer.data, "mssg":"Card Enrollment successful"}, status=status.HTTP_201_CREATED)
-
-class AuthorizeTokenization(APIView):
-    serializer_class = AuthorizeCardSerializer
-    permission_classes = (IsAuthenticated, IsIssuerBank, )
-
-    def get(self, request):
-        cardId = request.GET.get('cardId')
-        card = Card.objects.get(cardId=cardId)
-
-        if not card.is_issuer_authorized:
-            card.is_issuer_authorized = True
-            card.save()
-        
-        return Response({"success":"Issuer Bank Authorized card for tokenization"})
-
-
 class RetrieveDeleteCardAPIView(RetrieveDestroyAPIView):
     serializer_class = CardSerializer
     queryset = Card.objects.all()

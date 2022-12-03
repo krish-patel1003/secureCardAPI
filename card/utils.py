@@ -4,7 +4,7 @@ import logging
 import traceback
 from django.conf import settings
 import jwt
-import json
+
 
 def tokenizeCard(payload):
     try:

@@ -45,7 +45,7 @@ class BankCard(models.Model):
     lname = models.CharField(max_length=255)    
     phone = models.CharField(max_length=10)
     email = models.EmailField(default="a@b.com")
-    fullPan = models.CharField(max_length=255)
+    fullPAN = models.CharField(max_length=255)
     expDate = models.DateField()
 
     def __str__(self):

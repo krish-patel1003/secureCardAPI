@@ -17,7 +17,7 @@ class EmailThread(threading.Thread):
 class Util:
 
     @staticmethod
-    def prepare_email(user_data, request):
+    def prepare_verify_email(user_data, request):
         user = User.objects.get(email=user_data['email'])
 
         token = RefreshToken.for_user(user).access_token
