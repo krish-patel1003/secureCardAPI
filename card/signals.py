@@ -18,17 +18,16 @@ def authorize_card(sender, instance, created, **kwargs):
             email=user_email, fullPAN=fullPan, expDate=instance.expDate)
         if bank_card:
             instance.is_issuer_authorized = True
-        return 
+            create_token(Card, instance, True)
+        else:
+            Card.objects.get(cardId=instance.cardId).delete()
+            raise exceptions.ValidationError({"Error":"Card details r not issuer authorized"})
 
 
-@receiver(post_save, sender=Card)
 def create_token(sender, instance, created, **kwargs):
     if created:
         print("storing Token...")
         print(dir(instance))
-        if not instance.is_issuer_authorized:
-            Card.objects.get(cardId=instance.cardId).delete()
-            raise exceptions.PermissionDenied({"error":"the card is not issuer authorized"})
         t = instance.get_token()
         print(t)
         token = Token.objects.create(cardId=instance, token=t)

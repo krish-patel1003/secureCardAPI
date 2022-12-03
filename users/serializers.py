@@ -21,9 +21,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         ROLE_OPTIONS = ['CONSUMER', 'MERCHANT', 'BANK', 'ADMIN']
 
-        if not username:
-            raise serializers.ValidationError('username field empty')
-
         if not username.isalnum():
             raise serializers.ValidationError(
                 'username should be alphanumeric')
