@@ -8,7 +8,7 @@ from card.utils import encrypt, decrypt, tokenizeCard
 
 
 class Card(models.Model):
-    consumer = models.ForeignKey(ConsumerProfile, on_delete=models.CASCADE)
+    consumer = models.ForeignKey(ConsumerProfile, null=True, on_delete=models.CASCADE)
     cardId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fullPAN = models.CharField(max_length=255)
     expDate = models.DateField()
