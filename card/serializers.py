@@ -2,8 +2,11 @@ from rest_framework import serializers
 from card.models import Card
 from django.shortcuts import redirect 
 from django.utils.http import urlencode
+from django.core.validators import MinLengthValidator
 
 class CardSerializer(serializers.ModelSerializer):
+
+    fullPAN = serializers.CharField(max_length=16, validators=[MinLengthValidator(16)])
 
     class Meta:
         model = Card

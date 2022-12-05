@@ -7,7 +7,7 @@ from users.serializers import (
     EmailVerificationSerializer,
     LoginSerializer,
     ConsumerProfileSerializer,
-    BankSerializer
+    LogoutSerializer
 )
 from rest_framework.response import Response
 from rest_framework import status
@@ -25,7 +25,7 @@ from users.permissions import IsUser
 
 class RegisterAPIView(GenericAPIView):
     serializer_class = RegisterSerializer
-
+    
     def post(self, request):
         user = request.data
         serializer = self.serializer_class(data=user)
@@ -97,3 +97,14 @@ class PrepareConsumerProfile(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+
+class LogoutAPIView(GenericAPIView):
+    serializer_class = LogoutSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'mssg': 'user logged out'}, status=status.HTTP_204_NO_CONTENT)

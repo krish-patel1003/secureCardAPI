@@ -3,6 +3,7 @@ from users.models import User, ConsumerProfile, Bank
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
 from card.models import Card
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -96,3 +97,24 @@ class BankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bank
         fields = ['id', 'user', 'name', 'issuerId']
+
+
+class LogoutSerializer(serializers.Serializer):
+    refresh  = serializers.CharField()
+
+    default_error_messages = {
+        'bad_token':''
+    }
+
+    def validate(self, attrs):
+        # print(attrs)
+        self.token = attrs['refresh']
+        return attrs
+    
+    def save(self, **kwargs):
+        try:
+
+            RefreshToken(self.token).blacklist()
+        
+        except TokenError as e:
+            self.fail('bad_token')
