@@ -92,10 +92,12 @@ class LoginAPIView(GenericAPIView):
 class PrepareConsumerProfile(RetrieveUpdateAPIView):
     serializer_class = ConsumerProfileSerializer
     queryset = ConsumerProfile.objects.all()
-    permission_classes = (IsUser, ) 
-    lookup_field = "id" 
+    permission_classes = (IsAuthenticated, IsUser, ) 
+    lookup_field = "user" 
 
     def get_queryset(self):
+        # c = ConsumerProfile.objects.get(user=self.request.user)
+        # id = c.id
         return self.queryset.filter(user=self.request.user)
 
 

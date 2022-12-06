@@ -45,6 +45,7 @@ class EmailVerificationSerializer(serializers.Serializer):
 
 class LoginSerializer(serializers.ModelSerializer):
 
+    id = serializers.IntegerField(read_only=True)
     email = serializers.EmailField(max_length=255)
     username = serializers.CharField(max_length=255, read_only=True)
     password = serializers.CharField(min_length=1, write_only=True)
@@ -60,7 +61,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'username', 'tokens']
+        fields = ["id", 'email', 'password', 'username', 'tokens']
 
     def validate(self, attrs):
         print("Login serializer validation in proccess")
@@ -79,6 +80,7 @@ class LoginSerializer(serializers.ModelSerializer):
             raise AuthenticationFailed('Email is not verified')
 
         return {
+            "id":user.id,
             "email": user.email,
             "username": user.username,
             "tokens": user.tokens
