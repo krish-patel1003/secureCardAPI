@@ -14,8 +14,9 @@ def authorize_card(sender, instance, created, **kwargs):
         user = ConsumerProfile.objects.get(id=conumser.id).user
         user_email = user.email
         fullPan = decrypt(instance.fullPAN)
+        instance.issuerId = instance.get_issuer_id()
         bank_card = BankCard.objects.filter(
-            email=user_email, fullPAN=fullPan, expDate=instance.expDate)
+            email=user_email, fullPAN=fullPan, expDate=instance.expDate, issuerId=instance.issuerId)
         if bank_card:
             instance.is_issuer_authorized = True
             create_token(Card, instance, True)

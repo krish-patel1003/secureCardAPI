@@ -2,6 +2,7 @@ from django.db import models
 from users.models import ConsumerProfile
 import uuid
 from card.utils import encrypt, decrypt, tokenizeCard
+from django.core.validators import MinLengthValidator
 # from jwt.api_jws
 
 # Create your models here.
@@ -12,6 +13,7 @@ class Card(models.Model):
     cardId = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fullPAN = models.CharField(max_length=255)
     expDate = models.DateField()
+    issuerId = models.CharField(max_length=3, validators=[MinLengthValidator(3)], default="000")
     is_issuer_authorized = models.BooleanField(default=False)
     is_tokenized = models.BooleanField(default=False)
 
@@ -26,6 +28,14 @@ class Card(models.Model):
             "expDate":str(self.expDate)
         }]
         return tokenizeCard(data)
+
+    def get_issuer_id(self):
+        ep = self.fullPAN
+        p = decrypt(ep)
+        return p[:3]
+    
+    def get_card_reference_id(self):
+        return f'{self.issuerId}-{self.consumer.id}-{hex(int(self.cardId.time_low))[2:]}'
     
 
 class TokenManager(models.Manager):
@@ -41,6 +51,7 @@ class Token(models.Model):
 
 class BankCard(models.Model):
     consumerId = models.ForeignKey(ConsumerProfile, on_delete=models.CASCADE)
+    issuerId = models.CharField(max_length=3, validators=[MinLengthValidator(3)], default="123")
     fname = models.CharField(max_length=255)
     lname = models.CharField(max_length=255)    
     phone = models.CharField(max_length=10)
