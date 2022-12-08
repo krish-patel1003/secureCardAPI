@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from checkout.models import Transaction
 from card.models import *
 from users.models import *
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, ListAPIView
 from checkout.serializers import TransactionSerializer
 from rest_framework.permissions import IsAuthenticated
 from checkout.permissions import IsMerchant
@@ -24,5 +24,14 @@ class TransactionListCreateAPIView(ListCreateAPIView):
     def get_queryset(self):
         merchant = Merchant.objects.get(user=self.request.user)
         return self.queryset.filter(merchant=merchant)
+
+class TransacionHistoryAPIView(ListAPIView):
+    serializer_class = TransactionSerializer
+    permission_classes = (IsAuthenticated, )
+    queryset = Transaction.objects.all()
+
+    def get_queryset(self):
+        consumer = ConsumerProfile.objects.get(user=self.request.user)
+        return self.queryset.filter(consumer=consumer)
 
     

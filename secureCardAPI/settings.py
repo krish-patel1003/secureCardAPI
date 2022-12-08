@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-xde0$%c+han)4^$_2v7$b#)ux1ews18uzsh8*g@i=34!_(-cqj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["web-production-eedc.up.railway.app", "127.0.0.1"]
+ALLOWED_HOSTS = ["web-production-eedc.up.railway.app", "127.0.0.1", "127.0.0.1:5500"]
 
 
 # Application definition
@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'card',
-    'checkout'
+    'checkout',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'secureCardAPI.urls'
@@ -176,3 +178,6 @@ PAN_ENCRYPT_KEY = b'QYRyIQTW7wNrCCmqGAi53UnbCmMxJg07Jwn-3CVjaxQ='
 SWAGGER_SETTINGS = {
    'USE_SESSION_AUTH': False
 }
+
+
+CORS_ORIGIN_ALLOW_ALL = True
